@@ -8,6 +8,7 @@ import time
 import cv2
 import matplotlib.pyplot as plt
 from webcam import *
+from tf_style import *
 
 # Load images
 content_path = tf.keras.utils.get_file('turtle.jpg','https://storage.googleapis.com/download.tensorflow.org/example_images/Green_Sea_Turtle_grazing_seagrass.jpg')
@@ -53,18 +54,18 @@ def clip_0_1(image):
 
 opt = tf.train.AdamOptimizer(learning_rate=0.02, beta1=0.99, epsilon=1e-1)
 
-style_weight=1e-2	
+style_weight=1e-2 
 content_weight=1e4
 
 
 def train_step(image):
-	with tf.GradientTape() as tape:
-		outputs = S.StyleContentModel(image)
-		loss = S.style_content_loss(outputs, style_targets, content_targets)
+  with tf.GradientTape() as tape:
+    outputs = S.StyleContentModel(image)
+    loss = S.style_content_loss(outputs, style_targets, content_targets)
 
-	grad = tape.gradient(loss, image)
-	opt.apply_gradients([(grad, image)])
-	image.assign(clip_0_1(image))
+  grad = tape.gradient(loss, image)
+  opt.apply_gradients([(grad, image)])
+  image.assign(clip_0_1(image))
 
 start = time.time()
 

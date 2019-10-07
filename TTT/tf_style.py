@@ -100,7 +100,7 @@ class Styler():
 		return {'content':content_dict, 'style':style_dict}
 
 
-	def style_content_loss(self, outputs, style_targets, content_targets):
+	def style_content_loss(self, outputs, style_targets, content_targets, style_weight = 1e-2, content_weight = 1e4):
 
 		style_outputs = outputs['style']
 		content_outputs = outputs['content']
