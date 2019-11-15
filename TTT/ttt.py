@@ -24,16 +24,9 @@ results = parser.parse_args()
 
 style_image = get_image_from_device(ip = results.server_ip, imsize = (512,512))[None, ...]
 
-#style_image = (cv2.resize(cv2.cvtColor(cv2.imread(style_image), cv2.COLOR_BGR2RGB), (512, 512))/255).astype(np.float32)[None, ...]
 content_image = (cv2.resize(cv2.cvtColor(cv2.imread(results.cont_path), cv2.COLOR_BGR2RGB), (512, 512))/255).astype(np.float32)[None, ...]
 
 print("Image captured from device, max, value = ", np.ptp(style_image))
-
-# plt.subplot(1, 2, 1)
-# imshow(content_image, 'Content Image')
-
-# plt.subplot(1, 2, 2)
-# imshow(style_image, 'Style Image')
 
 
 vgg = tf.keras.applications.VGG19(include_top=False, weights='imagenet')
@@ -90,10 +83,6 @@ for n in range(epochs):
     step += 1
     train_step(image)
     print(".", end='')
-
-  # imshow(image.read_value())
-  # plt.title("Train step: {}".format(step))
-  # plt.show()
 
 imshow(image.read_value())
 plt.title("Train step: {}".format(step))
