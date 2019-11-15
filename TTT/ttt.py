@@ -9,24 +9,31 @@ import cv2
 import matplotlib.pyplot as plt
 from webcam import *
 from tf_style import *
+import argparse
 
-# Load images
-content_path = tf.keras.utils.get_file('turtle.jpg','https://storage.googleapis.com/download.tensorflow.org/example_images/Green_Sea_Turtle_grazing_seagrass.jpg')
-content_image = load_img(content_path)
-#style_image = cv2.imread('pebbles.jpeg')
-#style_image = cv2.cvtColor(style_image, cv2.COLOR_BGR2RGB)
-#style_path = tf.keras.utils.get_file('kandinsky5.jpg','https://storage.googleapis.com/download.tensorflow.org/example_images/Vassily_Kandinsky%2C_1913_-_Composition_7.jpg')
-#style_image = load_img(style_path)
+parser = argparse.ArgumentParser()
 
-style_image = get_image_from_device(imsize = (512,512))[None, ...]
+parser.add_argument('-p', action='store', required = True, dest='cont_path',
+                    help='Path to Content Image')
+
+parser.add_argument('-i', action='store', required = True, dest='server_ip',
+                    help='IP address of mobile server')
+
+
+results = parser.parse_args()
+
+style_image = get_image_from_device(ip = results.server_ip, imsize = (512,512))[None, ...]
+
+#style_image = (cv2.resize(cv2.cvtColor(cv2.imread(style_image), cv2.COLOR_BGR2RGB), (512, 512))/255).astype(np.float32)[None, ...]
+content_image = (cv2.resize(cv2.cvtColor(cv2.imread(results.cont_path), cv2.COLOR_BGR2RGB), (512, 512))/255).astype(np.float32)[None, ...]
 
 print("Image captured from device, max, value = ", np.ptp(style_image))
 
-plt.subplot(1, 2, 1)
-imshow(content_image, 'Content Image')
+# plt.subplot(1, 2, 1)
+# imshow(content_image, 'Content Image')
 
-plt.subplot(1, 2, 2)
-imshow(style_image, 'Style Image')
+# plt.subplot(1, 2, 2)
+# imshow(style_image, 'Style Image')
 
 
 vgg = tf.keras.applications.VGG19(include_top=False, weights='imagenet')
@@ -52,16 +59,21 @@ image = tf.Variable(content_image)
 def clip_0_1(image):
   return tf.clip_by_value(image, clip_value_min=0.0, clip_value_max=1.0)
 
+
 opt = tf.train.AdamOptimizer(learning_rate=0.02, beta1=0.99, epsilon=1e-1)
 
 style_weight=1e-2 
 content_weight=1e4
+
+total_variation_weight=100
 
 
 def train_step(image):
   with tf.GradientTape() as tape:
     outputs = S.StyleContentModel(image)
     loss = S.style_content_loss(outputs, style_targets, content_targets)
+    loss += total_variation_weight*tf.image.total_variation(image)
+
 
   grad = tape.gradient(loss, image)
   opt.apply_gradients([(grad, image)])
@@ -79,9 +91,13 @@ for n in range(epochs):
     train_step(image)
     print(".", end='')
 
-  imshow(image.read_value())
-  plt.title("Train step: {}".format(step))
-  plt.show()
+  # imshow(image.read_value())
+  # plt.title("Train step: {}".format(step))
+  # plt.show()
 
+imshow(image.read_value())
+plt.title("Train step: {}".format(step))
+
+plt.savefig(results.cont_path + 'style.jpg')
 end = time.time()
 print("Total time: {:.1f}".format(end-start))

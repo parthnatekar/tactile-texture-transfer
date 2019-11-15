@@ -5,9 +5,9 @@ import time
 import matplotlib.pyplot as plt
 from skimage import io
 
-def get_image_from_device(URL = "http://192.168.1.100:8080/photo.jpg", imsize = (512, 384)):
+def get_image_from_device(ip, imsize = (512, 384)):
 
-	    
+	URL = "http://{}/photo.jpg".format(ip)
 	img_arr = np.array(bytearray(urllib.request.urlopen(URL).read()),dtype=np.uint8)
 	#image = io.imread(URL, plugin='matplotlib')
 	#print(image)
