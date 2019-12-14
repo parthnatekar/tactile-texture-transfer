@@ -14,11 +14,13 @@ Transferring real textures made by users onto digital images using neural style 
 
 ## Usage
 
-1. Install the IP Webcam app from the Google Play Store on your mobile device.
+1. Clone Repository ```git clone 
 
-2. Start a webcam server on the application.
+2. Install the IP Webcam app from the Google Play Store on your mobile device.
 
-3. Run ```python3 ttt.py -p PATH_TO_INPUT_IMAGE -i IP_ADDRESS_OF_MOBILE_SERVER:PORT```
+3. Start a webcam server on the application.
+
+4. Run ```python3 ttt.py -p PATH_TO_INPUT_IMAGE -i IP_ADDRESS_OF_MOBILE_SERVER:PORT```
 
 ## Results
 
