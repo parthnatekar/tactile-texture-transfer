@@ -18,7 +18,7 @@ Transferring real textures made by users onto digital images using neural style 
 
 2. Start a webcam server on the application.
 
-3. Run ```python3 ttt.py -p PATH_TO_INPUT_IMAGE -i IP_ADDRES_OF_MOBILE_SERVER:PORT```
+3. Run ```python3 ttt.py -p PATH_TO_INPUT_IMAGE -i IP_ADDRESS_OF_MOBILE_SERVER:PORT```
 
 ## Results
 
