@@ -14,7 +14,7 @@ Transferring real textures made by users onto digital images using neural style 
 
 ## Usage
 
-1. Clone Repository ```git clone 
+1. Clone Repository ```git clone https://github.com/parthnatekar/tactile-texture-transfer.git``` and navigate to ```TTT/```
 
 2. Install the IP Webcam app from the Google Play Store on your mobile device.
 
