@@ -22,4 +22,9 @@ Transferring real textures made by users onto digital images using neural style 
 
 ## Results
 
+The image below shows an example implementation, where a user creates a texture using grains, and transfers this to an input image.
+
+<p align="center">
+  <img src="./images/Picture1.png" width="600"> 
+</p>
 
