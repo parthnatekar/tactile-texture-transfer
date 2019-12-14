@@ -1,5 +1,5 @@
 # tactile-texture-transfer
-Transferring real textures made by users onto digital images using neural style transfer.
+Transferring real and tactile textures made by users onto digital images using neural style transfer.
 
 ## Requirements
 > Tensorflow
