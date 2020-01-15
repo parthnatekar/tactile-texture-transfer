@@ -23,7 +23,7 @@ Transferring real and tactile textures made by users onto digital images using n
 4. Run ```python3 ttt.py -p PATH_TO_INPUT_IMAGE -i IP_ADDRESS_OF_MOBILE_SERVER:PORT```
 
 5. Use flag ```-m``` (optional) for static (i.e the style image is captured only once before the transfer algorithm is run) or dynamic (the style image is captured every epoch while running the algorithm, allowing modification of target style during transfer).
-Eg: ```python3 ttt.py -p PATH_TO_INPUT_IMAGE -i IP_ADDRESS_OF_MOBILE_SERVER:PORT -m d```
+Eg: ```python3 ttt.py -p PATH_TO_INPUT_IMAGE -i IP_ADDRESS_OF_MOBILE_SERVER:PORT -m dynamic```
 
 ## Results
 
